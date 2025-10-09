@@ -2,6 +2,9 @@
 
 This project provides tools for downloading and converting Aria VRS files.
 
+Web: https://www.projectaria.com/datasets/aea/ 
+
+Doc: https://facebookresearch.github.io/projectaria_tools/
 
 ## 📁 File Description
 
