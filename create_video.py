@@ -56,6 +56,9 @@ def process_frame_rgb_rotated(prov, cam_label: str, index: int, undist_w: int, u
         pinhole = calibration.get_linear_camera_calibration(
             undist_w, undist_h, undist_fov_deg, cam_label, device_calib.get_transform_device_camera()
         )
+
+        # import ipdb; ipdb.set_trace()
+        
         
         # Undistort
         undist = calibration.distort_by_calibration(raw, pinhole, device_calib)
@@ -225,12 +228,12 @@ def main():
                        help="Camera stream to process")
     
     # Video parameters
-    parser.add_argument("--fps", type=float, default=30.0, help="Output video FPS")
+    parser.add_argument("--fps", type=float, default=20.0, help="Output video FPS")
     parser.add_argument("--max_frames", type=int, default=None, help="Maximum number of frames to process")
     
     # Undistortion parameters
-    parser.add_argument("--undist_w", type=int, default=512, help="Undistorted image width")
-    parser.add_argument("--undist_h", type=int, default=512, help="Undistorted image height")
+    parser.add_argument("--undist_w", type=int, default=1408, help="Undistorted image width")
+    parser.add_argument("--undist_h", type=int, default=1408, help="Undistorted image height")
     parser.add_argument("--undist_fov", type=float, default=150.0, help="Undistorted FOV in degrees")
     
     # Devignetting
@@ -247,6 +250,10 @@ def main():
     
     args = parser.parse_args()
     
+    # hacks to fix bug
+    args.undist_fov = 150 * args.undist_w / 512
+
+
     # Create provider
     prov = get_provider(args.vrs, args.devignetting_mask)
     
